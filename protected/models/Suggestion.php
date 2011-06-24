@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'suggestions':
  * @property string $id
+ * @property integer $threadId
  * @property string $title
  * @property string $desc
  * @property integer $votes_up
@@ -38,13 +39,13 @@ class Suggestion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title', 'required'),
-			array('votes_up, votes_mid, votes_down', 'numerical', 'integerOnly'=>true),
+			array('title, threadId', 'required'),
+			array('threadId, votes_up, votes_mid, votes_down', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>200),
 			array('desc', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, desc, votes_up, votes_mid, votes_down', 'safe', 'on'=>'search'),
+			array('id, threadId, title, desc, votes_up, votes_mid, votes_down', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +67,7 @@ class Suggestion extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+            'threadId' => 'Thread id',
 			'title' => 'Title',
 			'desc' => 'Desc',
 			'votes_up' => 'Votes Up',
@@ -86,6 +88,7 @@ class Suggestion extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
+        $criteria->compare('ThreadId',$this->threadId);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('desc',$this->desc,true);
 		$criteria->compare('votes_up',$this->votes_up);
