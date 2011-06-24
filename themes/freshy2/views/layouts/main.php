@@ -23,6 +23,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="language" content="en" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" media="screen, projection" />
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/woc.css" media="screen, projection" />
     <?php /* Put the custom style here - like 'custom_bloggy.css', 'custom_vitamin', etc - you can store it in the app params or in a database. */ ?>
     <?php //if((Yii::app()->config->get('style') !== 'freshy2') && (Yii::app()->config->get('style'))) : ?>
 <!--        <link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->theme->baseUrl; ?>/css/<?php //echo Yii::app()->config->get('style')?>.css" media="screen, projection" />-->

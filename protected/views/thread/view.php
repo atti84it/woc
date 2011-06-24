@@ -39,4 +39,16 @@ $this->menu=array(
         )); ?>
     <?php endif; ?>
  
-</div><!-- comments -->
+</div><!-- suggestions -->
+
+<script>
+    $(function(){
+        
+        $('div.side-controls > img').mouseenter(function(){
+            $(this).addClass('light');
+        }).mouseleave(function(){
+            $(this).removeClass('light');
+        });
+        
+    });
+</script>

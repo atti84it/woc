@@ -50,6 +50,7 @@ class ThreadController extends Controller
 	 */
 	public function actionView($id)
 	{
+        Yii::app()->getClientScript()->registerCoreScript('jquery');
         $model = $this->loadModel($id);
         $suggestion=$this->newSuggestion($model);
         
