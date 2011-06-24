@@ -51,9 +51,12 @@ class ThreadController extends Controller
 	public function actionView($id)
 	{
         $model = $this->loadModel($id);
+        $suggestion=$this->newSuggestion($model);
+        
 		$this->render('view',array(
 			'model'=>$model,
             'suggestions'=>$model->suggestions,
+            'suggestion'=>$suggestion,
 		));
 	}
 
@@ -163,6 +166,28 @@ class ThreadController extends Controller
 		return $model;
 	}
 
+    protected function newSuggestion($post)
+    {
+        $suggestion=new Suggestion;
+        
+        if(isset($_POST['ajax']) && $_POST['ajax']==='suggestion-form')
+        {
+            echo CActiveForm::validate($suggestion);
+            Yii::app()->end();
+        }        
+        
+        if(isset($_POST['Suggestion']))
+        {
+            $suggestion->attributes=$_POST['Suggestion'];
+            if($post->addSuggestion($suggestion))
+            {
+                Yii::app()->user->setFlash('suggestionSubmitted','Thank you...');
+                $this->refresh();
+            }
+        }
+        return $suggestion;        
+    }
+    
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated

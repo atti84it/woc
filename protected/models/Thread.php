@@ -89,4 +89,10 @@ class Thread extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    
+    public function addSuggestion($suggestion)
+    {
+        $suggestion->threadId=$this->id;
+        return $suggestion->save();
+    }    
 }

@@ -21,8 +21,22 @@ $this->menu=array(
 
 <?php foreach($suggestions as $s):?>
 
-<p><b><?php echo CHtml::encode($s->title); ?></b></p>
-
-<p><?php echo CHtml::encode($s->desc); ?></p>
+    <?php echo $this->renderPartial('/suggestion/_view', array('data'=>$s)); ?>
 
 <?php endforeach; ?>
+
+<div id="suggestions">
+
+    <h3>New suggestion</h3>
+ 
+    <?php if(Yii::app()->user->hasFlash('suggestionSubmitted')): ?>
+        <div class="flash-success">
+            <?php echo Yii::app()->user->getFlash('suggestionSubmitted'); ?>
+        </div>
+    <?php else: ?>
+        <?php $this->renderPartial('/suggestion/_form',array(
+            'model'=>$suggestion,
+        )); ?>
+    <?php endif; ?>
+ 
+</div><!-- comments -->
