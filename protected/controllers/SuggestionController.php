@@ -1,6 +1,6 @@
 <?php
 
-class ThreadController extends Controller
+class SuggestionController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -50,10 +50,8 @@ class ThreadController extends Controller
 	 */
 	public function actionView($id)
 	{
-        $model = $this->loadModel($id);
 		$this->render('view',array(
-			'model'=>$model,
-            'suggestions'=>$model->suggestions,
+			'model'=>$this->loadModel($id),
 		));
 	}
 
@@ -63,14 +61,14 @@ class ThreadController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Thread;
+		$model=new Suggestion;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Thread']))
+		if(isset($_POST['Suggestion']))
 		{
-			$model->attributes=$_POST['Thread'];
+			$model->attributes=$_POST['Suggestion'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -92,9 +90,9 @@ class ThreadController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Thread']))
+		if(isset($_POST['Suggestion']))
 		{
-			$model->attributes=$_POST['Thread'];
+			$model->attributes=$_POST['Suggestion'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -129,7 +127,7 @@ class ThreadController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Thread');
+		$dataProvider=new CActiveDataProvider('Suggestion');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -140,10 +138,10 @@ class ThreadController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Thread('search');
+		$model=new Suggestion('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Thread']))
-			$model->attributes=$_GET['Thread'];
+		if(isset($_GET['Suggestion']))
+			$model->attributes=$_GET['Suggestion'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -157,7 +155,7 @@ class ThreadController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Thread::model()->findByPk((int)$id);
+		$model=Suggestion::model()->findByPk((int)$id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -169,7 +167,7 @@ class ThreadController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='thread-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='suggestion-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

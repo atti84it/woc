@@ -18,3 +18,11 @@ $this->menu=array(
 <p><?php echo CHtml::encode($model->short_desc); ?></p>
 
 <?php echo CHtml::encode($model->desc); ?>
+
+<?php foreach($suggestions as $s):?>
+
+<p><b><?php echo CHtml::encode($s->title); ?></b></p>
+
+<p><?php echo CHtml::encode($s->desc); ?></p>
+
+<?php endforeach; ?>
