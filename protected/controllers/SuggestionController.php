@@ -69,6 +69,8 @@ class SuggestionController extends Controller
 		if(isset($_POST['Suggestion']))
 		{
 			$model->attributes=$_POST['Suggestion'];
+            $model->userId=Yii::app()->user->id;
+            $model->dateCreated = date('Y-m-d H:i:s'); //TODOdate            
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

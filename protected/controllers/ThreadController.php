@@ -51,6 +51,7 @@ class ThreadController extends Controller
 	public function actionView($id)
 	{
         Yii::app()->getClientScript()->registerCoreScript('jquery');
+        Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
         $model = $this->loadModel($id);
         $suggestion=$this->newSuggestion($model);
         
@@ -75,6 +76,8 @@ class ThreadController extends Controller
 		if(isset($_POST['Thread']))
 		{
 			$model->attributes=$_POST['Thread'];
+            $model->userId=Yii::app()->user->id;
+            $model->dateCreated = date('Y-m-d H:i:s'); //TODOdate
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

@@ -25,6 +25,15 @@ $this->menu=array(
 
 <?php endforeach; ?>
 
+<div id="prompt-hotlog" class="prompt">
+    <div class="close-link"><a href="#">close</a></div><br />
+</div>
+
+<div id="prompt-message" class="prompt">
+    <div class="close-link"><a href="#">close</a></div><br />
+    <span id="message"></span>
+</div>
+
 <div id="suggestions">
 
     <h3>New suggestion</h3>
@@ -57,11 +66,22 @@ $this->menu=array(
                 url: 'index.php?r=suggestion/ajaxVote', //TODO chtml::link or whatever
                 data: {id: suggestionId, type: type},
                 success: function (data) {
-                    clickedContainer.html(data.msg);
+                    if (data.code == 'ok')
+                    {
+                        clickedContainer.html(data.msg);
+                    } else {
+                        clickedContainer.html('');
+                        $('#message').html(data.msg);
+                        //$('#prompt-message').position({my:'left top', at:'left bottom', of:clickedContainer}); // Not working
+                        $('#prompt-message').fadeIn('fast');
+                    }
                 },
                 dataType: 'json',
             });
         });
         
+        $('.close-link').click(function(){
+            $(this).parent().hide();
+        });
     });
 </script>

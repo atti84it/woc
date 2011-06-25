@@ -5,9 +5,11 @@
  *
  * The followings are the available columns in table 'threads':
  * @property string $id
+ * @property integer $userId
  * @property string $title
  * @property string $short_desc
  * @property string $desc
+ * @property string $dateCreated
  */
 class Thread extends CActiveRecord
 {
@@ -36,11 +38,11 @@ class Thread extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, short_desc, desc', 'required'),
+			array('title, short_desc, desc, userId, dateCreated', 'required'),
 			array('title', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, title, short_desc, desc', 'safe', 'on'=>'search'),
+			array('id, title, short_desc, desc, userId, dateCreated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +68,7 @@ class Thread extends CActiveRecord
 			'title' => 'Title',
 			'short_desc' => 'Short Description',
 			'desc' => 'Desc',
+            'dateCreated' => 'Date of creation'
 		);
 	}
 
@@ -93,6 +96,8 @@ class Thread extends CActiveRecord
     public function addSuggestion($suggestion)
     {
         $suggestion->threadId=$this->id;
+        $suggestion->userId=Yii::app()->user->id;
+        $suggestion->dateCreated = date('Y-m-d H:i:s'); //TODOdate           
         return $suggestion->save();
-    }    
+    }   
 }

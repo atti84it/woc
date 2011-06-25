@@ -1,0 +1,3 @@
+thread:
+.view: adjust position of prompts
+       don't eliminate arrow controls, just overlay with a div

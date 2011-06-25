@@ -6,8 +6,10 @@
  * The followings are the available columns in table 'suggestions':
  * @property string $id
  * @property integer $threadId
+ * @property integer $userId
  * @property string $title
  * @property string $desc
+ * @property string $dateCreated
  * @property integer $votes_up
  * @property integer $votes_mid
  * @property integer $votes_down
@@ -48,13 +50,13 @@ class Suggestion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, threadId', 'required'),
+			array('title, threadId, userId, dateCreated', 'required'),
 			array('threadId, votes_up, votes_mid, votes_down', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>200),
 			array('desc', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, threadId, title, desc, votes_up, votes_mid, votes_down', 'safe', 'on'=>'search'),
+			array('id, threadId, title, desc, votes_up, votes_mid, votes_down, userId, dateCreated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +81,7 @@ class Suggestion extends CActiveRecord
             'threadId' => 'Thread id',
 			'title' => 'Title',
 			'desc' => 'Desc',
+            'dateCreated' => 'Date of creation',
 			'votes_up' => 'Votes Up',
 			'votes_mid' => 'Votes Mid',
 			'votes_down' => 'Votes Down',
@@ -134,7 +137,7 @@ class Suggestion extends CActiveRecord
                 $vote = new Vote;
                 $vote->suggestionId = $this->id;
                 $vote->userId = Yii::app()->user->id;
-                $vote->datetime = date('Y-m-d H:i:s');
+                $vote->datetime = date('Y-m-d H:i:s'); //TODOdate
                 $vote->type = constant($const);
                 
                 $result = $vote->save();
