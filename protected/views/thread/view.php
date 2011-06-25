@@ -48,6 +48,19 @@ $this->menu=array(
             $(this).addClass('light');
         }).mouseleave(function(){
             $(this).removeClass('light');
+        }).click(function(){
+            var clickedContainer = $(this).parent();
+            var suggestionId = $(this).attr('id').split('-')[1];
+            var type = $(this).attr('id').split('-')[2];
+            $(this).parent().html('<img src="images/wait2.gif">');
+            $.ajax({
+                url: 'index.php?r=suggestion/ajaxVote', //TODO chtml::link or whatever
+                data: {id: suggestionId, type: type},
+                success: function (data) {
+                    clickedContainer.html(data.msg);
+                },
+                dataType: 'json',
+            });
         });
         
     });

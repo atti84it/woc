@@ -14,6 +14,15 @@
  */
 class Suggestion extends CActiveRecord
 {
+    /**
+     * Error message on voting operations
+     */
+    public $errorMsg;
+    
+    const VOTE_UP = 3;
+    const VOTE_MID = 2;
+    const VOTE_DOWN = 1;
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Suggestion the static model class
@@ -99,4 +108,50 @@ class Suggestion extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    
+    /**
+     * Registers a vote
+     * @param string $type One of 'up', 'mid', 'down'
+     * @return boolean according to success
+     */
+    public function vote($type)
+    {
+        if (in_array($type, array('up','mid','down')))
+        {
+            $vote = Vote::model()->findAll(array(
+                'condition' => 'suggestionId = :suggestionId AND userId = :userId',
+                'params' => array(
+                    ':suggestionId' => $this->id, 
+                    ':userId' => Yii::app()->user->id
+                ),
+            ));
+            if ($vote)
+            {
+                $this->errorMsg = 'You already voted for this suggestion!';
+                return false;
+            } else {
+                $const = 'Suggestion::VOTE_' . strtoupper($type);
+                $vote = new Vote;
+                $vote->suggestionId = $this->id;
+                $vote->userId = Yii::app()->user->id;
+                $vote->datetime = date('Y-m-d H:i:s');
+                $vote->type = constant($const);
+                
+                $result = $vote->save();
+                if ($result)
+                {
+                    $attribute = 'votes_' . $type;
+                    $this->$attribute += 1;
+                    $this->save();
+                    return true;
+                } else {
+                    $this->errorMsg = 'Internal DB error';
+                    return false;
+                }
+            }
+        } else {
+            $this->errorMsg = 'Invalid option';
+            return false;
+        }
+    }
 }

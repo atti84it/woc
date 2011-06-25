@@ -1,9 +1,9 @@
 <div class="view">
 
     <div class="side-controls">
-        <img src="images/up20x24.png">
-        <img src="images/mid20x24.png">
-        <img src="images/down20x24.png">
+        <img src="images/up20x24.png" id="<?php echo 'vote-' . $data->id . '-up';?>" >
+        <img src="images/mid20x24.png" id="<?php echo 'vote-' . $data->id . '-mid';?>" >
+        <img src="images/down20x24.png" id="<?php echo 'vote-' . $data->id . '-down';?>" >
     </div>
 	
     <div class="">

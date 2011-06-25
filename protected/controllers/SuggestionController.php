@@ -31,7 +31,7 @@ class SuggestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','ajaxVote'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -121,6 +121,18 @@ class SuggestionController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
+    
+    public function actionAjaxVote($id,$type)
+    {
+        if (Yii::app()->request->isAjaxRequest)
+        {
+            $model = $this->loadModel($id);
+            $this->renderPartial('ajaxVote',array(
+                'model'=>$model,
+                'success'=>$model->vote($type)
+            ));
+        }
+    }
 
 	/**
 	 * Lists all models.
