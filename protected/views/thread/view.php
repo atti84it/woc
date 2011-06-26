@@ -65,11 +65,13 @@ $this->menu=array(
             var clickedContainer = $(this).parent();
             var suggestionId = $(this).attr('id').split('-')[1];
             var type = $(this).attr('id').split('-')[2];
+            var timer = setTimeout(function(){timeout(clickedContainer)},10000);
             $(this).parent().html('<img src="images/wait2.gif">');
             $.ajax({
                 url: 'index.php?r=suggestion/ajaxVote', //TODO chtml::link or whatever
                 data: {id: suggestionId, type: type},
                 success: function (data) {
+                    clearTimeout(timer);
                     if (data.code == 'ok')
                     {
                         clickedContainer.html(data.msg);
@@ -91,4 +93,23 @@ $this->menu=array(
             $(this).parent().hide();
         });
     });
+    
+    function timeout(clickedContainer)
+    {
+        clickedContainer.html(''); // Change this, must be overlay
+    }
+    
+    /*
+function timedCount() {
+    if ( (tmp=jQuery('#bigboxDetails .gt-cell-actived').children('.gt-inner').html()) != cell_value ) {
+        cell_value=tmp;
+        jQuery('#descripcion').html(cell_value);
+        if (cell_value != null) {
+            image(cell_value);
+        }
+    }
+
+    t=setTimeout("timedCount()",100);
+}    
+    */
 </script>
