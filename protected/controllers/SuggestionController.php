@@ -27,11 +27,11 @@ class SuggestionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','ajaxVote'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','ajaxVote'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -69,8 +69,7 @@ class SuggestionController extends Controller
 		if(isset($_POST['Suggestion']))
 		{
 			$model->attributes=$_POST['Suggestion'];
-            $model->userId=Yii::app()->user->id;
-            $model->dateCreated = date('Y-m-d H:i:s'); //TODOdate            
+         
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -126,13 +125,23 @@ class SuggestionController extends Controller
     
     public function actionAjaxVote($id,$type)
     {
-        if (Yii::app()->request->isAjaxRequest)
+        if (Yii::app()->user->isGuest)
         {
+            $this->renderPartial('ajaxVote',array(
+                'isGuest'=>true
+            ));
+            Yii::app()->end();
+        }
+        
+        if (Yii::app()->request->isAjaxRequest)
+        {     
             $model = $this->loadModel($id);
             $this->renderPartial('ajaxVote',array(
                 'model'=>$model,
-                'success'=>$model->vote($type)
+                'success'=>$model->vote($type),
+                'isGuest'=>false
             ));
+            Yii::app()->end();
         }
     }
 

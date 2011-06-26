@@ -10,8 +10,8 @@
 }
 
 .prompt {
-    width:200px; 
-    height:120px; 
+    width:300px; 
+    height:220px; 
     border: 2px solid #FF6600;
     background: #FFFFFF;
     z-index: 99;

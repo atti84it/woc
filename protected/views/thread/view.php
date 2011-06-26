@@ -27,6 +27,10 @@ $this->menu=array(
 
 <div id="prompt-hotlog" class="prompt">
     <div class="close-link"><a href="#">close</a></div><br />
+    You must be registered to vote<br />
+    Enter your email address and verification code to join us in one click!<br />
+    <input size="30" maxlength="40" id="hotlog-email" type="text" />
+    <input id="hotlog-submit" value="Join" type="button" />
 </div>
 
 <div id="prompt-message" class="prompt">
@@ -69,8 +73,11 @@ $this->menu=array(
                     if (data.code == 'ok')
                     {
                         clickedContainer.html(data.msg);
+                    } else if (data.code == 'isguest') {
+                        clickedContainer.html(''); // Change this, must be overlay
+                        $('#prompt-hotlog').fadeIn('fast');
                     } else {
-                        clickedContainer.html('');
+                        clickedContainer.html(''); // Change this, must be overlay
                         $('#message').html(data.msg);
                         //$('#prompt-message').position({my:'left top', at:'left bottom', of:clickedContainer}); // Not working
                         $('#prompt-message').fadeIn('fast');
