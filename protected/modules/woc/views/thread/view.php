@@ -125,6 +125,8 @@ $this->menu=array(
                         $('#hotlog-result').html('Verification code is not correct');
                     } else if (data.code == 'emailexisting') {
                         $('#hotlog-result').html('You are already a member. Have you forgot your password?');
+                    } else if (data.code == 'dberror') {
+                        $('#hotlog-result').html('Unknown database error :(');
                     }
                 }
             });

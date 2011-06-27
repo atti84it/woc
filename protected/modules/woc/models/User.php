@@ -7,9 +7,9 @@
  * @property string $id
  * @property string $email
  * @property string $nickname
- * @property string $registration_date
- * @property string $updated_date
- * @property string $last_login
+ * @property string $dateCreated
+ * @property string $dateUpdated
+ * @property string $lastLogin
  * @property integer $karma
  */
 class User extends CActiveRecord
@@ -39,14 +39,14 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, registration_date', 'required'),
+			array('email, dateCreated', 'required'),
 			array('karma', 'numerical', 'integerOnly'=>true),
 			array('email', 'length', 'max'=>25),
 			array('nickname', 'length', 'max'=>70),
-			array('updated_date, last_login', 'safe'),
+			array('dateUpdated, lastLogin', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, email, nickname, registration_date, updated_date, last_login, karma', 'safe', 'on'=>'search'),
+			array('id, email, nickname, dateCreated, dateUpdated, lastLogin, karma', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,9 +70,9 @@ class User extends CActiveRecord
 			'id' => 'ID',
 			'email' => 'Email',
 			'nickname' => 'Nickname',
-			'registration_date' => 'Registration Date',
-			'updated_date' => 'Updated Date',
-			'last_login' => 'Last Login',
+			'dateCreated' => 'Registration Date',
+			'dateUpdated' => 'Updated Date',
+			'lastLogin' => 'Last Login',
 			'karma' => 'Karma',
 		);
 	}
@@ -91,9 +91,9 @@ class User extends CActiveRecord
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('nickname',$this->nickname,true);
-		$criteria->compare('registration_date',$this->registration_date,true);
-		$criteria->compare('updated_date',$this->updated_date,true);
-		$criteria->compare('last_login',$this->last_login,true);
+		$criteria->compare('dateCreated',$this->dateCreated,true);
+		$criteria->compare('dateUpdated',$this->dateUpdated,true);
+		$criteria->compare('lastLogin',$this->lastLogin,true);
 		$criteria->compare('karma',$this->karma);
 
 		return new CActiveDataProvider(get_class($this), array(
@@ -106,9 +106,16 @@ class User extends CActiveRecord
      */
     public static function hotlog($params)
     {
-        $ca = new CCaptchaAction;
-        if (! $ca->validate($params['verificationCode']) )
+        $ca = Yii::app()->getController()->createAction('captcha');
+        if (! $ca->validate($params['verificationCode'], false) )
             return 'wrongcode';
-        return 'ok';
+            
+        $user = new User;
+        $user->email = $params['email'];
+        $user->dateCreated = date('Y-m-d H:i:s'); //TODOdate
+        if ($user->save())
+            return 'ok';
+        else
+            return 'dberror';
     }
 }
