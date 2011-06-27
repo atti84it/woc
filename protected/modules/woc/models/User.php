@@ -100,4 +100,15 @@ class User extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+    
+    /**
+     * $params = array('verificationCode'=>$verificationCode, 'email'=>$email)
+     */
+    public static function hotlog($params)
+    {
+        $ca = new CCaptchaAction;
+        if (! $ca->validate($params['verificationCode']) )
+            return 'wrongcode';
+        return 'ok';
+    }
 }

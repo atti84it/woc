@@ -11,6 +11,11 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'userId'); ?>
+		<?php echo $form->textField($model,'userId',array('size'=>10,'maxlength'=>10)); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'title'); ?>
 		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>200)); ?>
 	</div>
@@ -23,6 +28,11 @@
 	<div class="row">
 		<?php echo $form->label($model,'desc'); ?>
 		<?php echo $form->textArea($model,'desc',array('rows'=>6, 'cols'=>50)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'dateCreated'); ?>
+		<?php echo $form->textField($model,'dateCreated'); ?>
 	</div>
 
 	<div class="row buttons">

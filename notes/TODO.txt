@@ -1,3 +1,13 @@
 thread:
 .view: adjust position of prompts
        don't eliminate arrow controls, just overlay with a div
+       Markdown of desc:
+        <?php $this->beginWidget('CMarkdown');?>
+        This is my markdown formatted content
+        <?php $this->endWidget();?>
+
+suggestion:
+relations
+stat relations with votes_up/mid/down
+
+cron

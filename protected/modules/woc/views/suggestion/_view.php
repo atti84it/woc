@@ -1,9 +1,10 @@
+<?php $assetsUrl = Yii::app()->getModule('woc')->assetsUrl; ?>
 <div class="view">
 
     <div class="side-controls">
-        <img src="images/up20x24.png" id="<?php echo 'vote-' . $data->id . '-up';?>" >
-        <img src="images/mid20x24.png" id="<?php echo 'vote-' . $data->id . '-mid';?>" >
-        <img src="images/down20x24.png" id="<?php echo 'vote-' . $data->id . '-down';?>" >
+        <img src="<?php echo $assetsUrl; ?>images/up20x24.png" id="<?php echo 'vote-' . $data->id . '-up';?>" >
+        <img src="<?php echo $assetsUrl; ?>images/mid20x24.png" id="<?php echo 'vote-' . $data->id . '-mid';?>" >
+        <img src="<?php echo $assetsUrl; ?>images/down20x24.png" id="<?php echo 'vote-' . $data->id . '-down';?>" >
     </div>
 	
     <div class="">

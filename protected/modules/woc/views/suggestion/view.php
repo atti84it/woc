@@ -20,8 +20,10 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'threadId',
+		'userId',
 		'title',
 		'desc',
+		'dateCreated',
 		'votes_up',
 		'votes_mid',
 		'votes_down',

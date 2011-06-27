@@ -1,4 +1,6 @@
 <?php
+$assetsUrl = Yii::app()->getModule('woc')->assetsUrl;
+
 $this->breadcrumbs=array(
 	'Threads'=>array('index'),
 	$model->title,
@@ -28,9 +30,17 @@ $this->menu=array(
 <div id="prompt-hotlog" class="prompt">
     <div class="close-link"><a href="#">close</a></div><br />
     You must be registered to vote<br />
+    <br />
     Enter your email address and verification code to join us in one click!<br />
-    <input size="30" maxlength="40" id="hotlog-email" type="text" />
-    <input id="hotlog-submit" value="Join" type="button" />
+    <br />
+    <div id="hotlog-captcha"></div>
+    <label for="hotlog-verification-code">Verification code:</label>
+    <input size="10" maxlength="40" id="hotlog-verification-code" type="text" /><br />
+    <label for="hotlog-email">Email address:</label>
+    <input size="30" maxlength="40" id="hotlog-email" type="text" /><br />
+    <input id="hotlog-submit" value="Join" type="button" /><br /><br />
+    <div>Please provide a valid email address. You will get your password there.</div>
+    <div id="hotlog-result"></div>
 </div>
 
 <div id="prompt-message" class="prompt">
@@ -65,27 +75,58 @@ $this->menu=array(
             var clickedContainer = $(this).parent();
             var suggestionId = $(this).attr('id').split('-')[1];
             var type = $(this).attr('id').split('-')[2];
-            var timer = setTimeout(function(){timeout(clickedContainer)},10000);
-            $(this).parent().html('<img src="images/wait2.gif">');
+            var timerVote = setTimeout(function(){timeout(clickedContainer)},10000);
+            $(this).parent().html('<img src="<?php echo $assetsUrl; ?>images/wait2.gif">');
             $.ajax({
-                url: 'index.php?r=suggestion/ajaxVote', //TODO chtml::link or whatever
+                url: '<?php echo $this->createUrl('/woc/suggestion/ajaxVote'); ?>',
                 data: {id: suggestionId, type: type},
                 success: function (data) {
-                    clearTimeout(timer);
+                    clearTimeout(timerVote);
                     if (data.code == 'ok')
                     {
                         clickedContainer.html(data.msg);
                     } else if (data.code == 'isguest') {
-                        clickedContainer.html(''); // Change this, must be overlay
+                        clickedContainer.html(''); //TODO Change this, must be overlay
                         $('#prompt-hotlog').fadeIn('fast');
+                        $.ajax({
+                            url: '<?php echo $this->createUrl('/woc/user/ajaxCaptchaPicture'); ?>',
+                            success: function (data) {
+                                $('#hotlog-captcha').html(data);
+                            },
+                            dataType: 'html'
+                        });
+                        
                     } else {
-                        clickedContainer.html(''); // Change this, must be overlay
+                        clickedContainer.html(''); //TODO Change this, must be overlay
                         $('#message').html(data.msg);
                         //$('#prompt-message').position({my:'left top', at:'left bottom', of:clickedContainer}); // Not working
                         $('#prompt-message').fadeIn('fast');
                     }
                 },
                 dataType: 'json',
+            });
+        });
+        
+        $('#hotlog-submit').click(function(){
+            var verificationCode = $('#hotlog-verification-code').val();
+            var email = $('#hotlog-email').val();
+            //TODO disable code, email and button
+            //TODO show wait... + img
+            //TODO enable timeout
+            $.ajax({
+                url: '<?php echo $this->createUrl('/woc/user/ajaxHotlog'); ?>',
+                data: {verificationCode: verificationCode, email: email},
+                dataType: 'json',
+                success: function (data){
+                    if (data.code == 'ok')
+                    {
+                        $('#hotlog-result').html('Succesful registration! You may now login using the password that has been sent to your email address');
+                    } else if (data.code == 'wrongcode') {
+                        $('#hotlog-result').html('Verification code is not correct');
+                    } else if (data.code == 'emailexisting') {
+                        $('#hotlog-result').html('You are already a member. Have you forgot your password?');
+                    }
+                }
             });
         });
         
@@ -96,20 +137,7 @@ $this->menu=array(
     
     function timeout(clickedContainer)
     {
-        clickedContainer.html(''); // Change this, must be overlay
+        clickedContainer.html(''); //TODO Change this, must be overlay
     }
     
-    /*
-function timedCount() {
-    if ( (tmp=jQuery('#bigboxDetails .gt-cell-actived').children('.gt-inner').html()) != cell_value ) {
-        cell_value=tmp;
-        jQuery('#descripcion').html(cell_value);
-        if (cell_value != null) {
-            image(cell_value);
-        }
-    }
-
-    t=setTimeout("timedCount()",100);
-}    
-    */
 </script>
