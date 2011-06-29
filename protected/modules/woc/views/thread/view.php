@@ -66,27 +66,38 @@ $this->menu=array(
 
 <script>
     $(function(){
+
+        $('.side-controls-overlay').hide();  // hide it initially div
         
         $('div.side-controls > img').mouseenter(function(){
             $(this).addClass('light');
         }).mouseleave(function(){
             $(this).removeClass('light');
         }).click(function(){
-            var clickedContainer = $(this).parent();
+            var clickedContainer = $(this).parent().parent();
             var suggestionId = $(this).attr('id').split('-')[1];
             var type = $(this).attr('id').split('-')[2];
-            var timerVote = setTimeout(function(){timeout(clickedContainer)},10000);
-            $(this).parent().html('<img src="<?php echo $assetsUrl; ?>images/wait2.gif">');
+            var timerVote = setTimeout(function(){timeout(clickedContainer)},10000);            
+            
+            var height=$(clickedContainer).height(); // add? .children('.side-controls')
+            var width =$(clickedContainer).width();
+            $(clickedContainer).children('.side-controls-overlay').height(height);
+            $(clickedContainer).children('.side-controls-overlay').width(width);
+            $(clickedContainer).children('.side-controls').hide();
+            $(clickedContainer).children('.side-controls-overlay').show();
+
+            // $(this).parent().html('<img src="<?php echo $assetsUrl; ?>images/wait2.gif">');
             $.ajax({
                 url: '<?php echo $this->createUrl('/woc/suggestion/ajaxVote'); ?>',
                 data: {id: suggestionId, type: type},
                 success: function (data) {
                     clearTimeout(timerVote);
+                    restoreControls(clickedContainer);
                     if (data.code == 'ok')
                     {
-                        clickedContainer.html(data.msg);
+                        // clickedContainer.html(data.msg); // TODO do something better here
                     } else if (data.code == 'isguest') {
-                        clickedContainer.html(''); //TODO Change this, must be overlay
+                        //clickedContainer.html(''); //TODO Change this, must be overlay
                         $('#prompt-hotlog').fadeIn('fast');
                         $.ajax({
                             url: '<?php echo $this->createUrl('/woc/user/ajaxCaptchaPicture'); ?>',
@@ -97,7 +108,7 @@ $this->menu=array(
                         });
                         
                     } else {
-                        clickedContainer.html(''); //TODO Change this, must be overlay
+                        // clickedContainer.html(''); //TODO Change this, must be overlay
                         $('#message').html(data.msg);
                         //$('#prompt-message').position({my:'left top', at:'left bottom', of:clickedContainer}); // Not working
                         $('#prompt-message').fadeIn('fast');
@@ -135,11 +146,16 @@ $this->menu=array(
         $('.close-link').click(function(){
             $(this).parent().hide();
         });
+        
+        function restoreControls(target){
+            $(target).children('.side-controls').show();
+            $(target).children('.side-controls-overlay').hide();
+        }
     });
     
     function timeout(clickedContainer)
     {
-        clickedContainer.html(''); //TODO Change this, must be overlay
+        restoreControls(clickedContainer);
     }
     
 </script>

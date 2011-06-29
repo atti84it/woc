@@ -1,13 +1,20 @@
 thread:
-.view: adjust position of prompts
-       don't eliminate arrow controls, just overlay with a div
-       Markdown of desc:
-        <?php $this->beginWidget('CMarkdown');?>
-        This is my markdown formatted content
-        <?php $this->endWidget();?>
+  view: adjust position of prompts
+        don't eliminate arrow controls, just overlay with a div
+        Markdown of desc: http://www.yiiframework.com/doc/api/1.1/CMarkdown/
+          <?php $this->beginWidget('CMarkdown');?>
+          This is my markdown formatted content
+          <?php $this->endWidget();?>
+        Smileys (+)
+  proposed/discussions/debates - works in progress - finished/implemented
+  assignee(?)/responsible(?)/ team members + coordinator(?)
 
 suggestion:
-relations
-stat relations with votes_up/mid/down
+  relations
+  stat relations with votes_up/mid/down
+
+user:
+  confirmation email!! (++)
+  registration form (+)
 
 cron

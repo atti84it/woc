@@ -9,6 +9,10 @@
     margin-right: 8px;
 }
 
+.side-controls-overlay > img {
+    opacity: 0.6;
+}
+
 .prompt {
     width:400px; 
     height:360px; 
