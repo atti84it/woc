@@ -113,6 +113,37 @@ class Suggestion extends CActiveRecord
 	}
     
     /**
+     * Returns an associative array with:
+     *   'type': one of 'up, mid, down'
+     *   'opacity': strenght of decision
+     */
+    public function getPrevalentVote()
+    {   
+        $totVotes = $this->votes_up + $this->votes_mid + $this->votes_down;
+        if ($this->votes_up >= $this->votes_mid) 
+            if ($this->votes_up >= $this->votes_down) 
+                $type = 'up';
+             else 
+                $type = 'down';
+         else 
+            if ($this->votes_mid >= $this->votes_down) 
+                $type = 'mid';
+             else 
+                $type = 'down';
+        
+        $var = 'votes_' . $type;
+        
+        $opacity = $this->{$var} / $this->totVotes;
+        
+        return array('type' => $type, 'opacity' => $opacity);
+    }
+    
+    public function getTotVotes()
+    {
+        return $this->votes_up + $this->votes_mid + $this->votes_down;
+    }
+    
+    /**
      * Registers a vote
      * @param string $type One of 'up', 'mid', 'down'
      * @return boolean according to success

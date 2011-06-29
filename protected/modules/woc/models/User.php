@@ -171,7 +171,7 @@ class User extends CActiveRecord
     public function sendPasswordEmail()
     {
         $subject='Subscription to ' . Yii::app()->name; // or? CHtml::encode(Yii::app()->name)
-        $body='You can now login with the following credentials. User: ' . $this->email . ' Pass: ' . $this->cleanPassword . ' ';
+        $body='You can now login with the following credentials. Username: ' . $this->email . ' Password: ' . $this->cleanPassword . ' ';
         $headers='From: noreply@woc.demo';
 		return mail($this->email,$subject,$body,$headers);
     }

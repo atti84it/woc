@@ -20,7 +20,7 @@ class WocModule extends CWebModule
 		));
         
         $assetsDir = dirname(__FILE__).DIRECTORY_SEPARATOR.'assets';
-        $this->assetsUrl = Yii::app()->getAssetManager()->publish($assetsDir).DIRECTORY_SEPARATOR;
+        $this->assetsUrl = Yii::app()->getAssetManager()->publish($assetsDir, false, -1, true).DIRECTORY_SEPARATOR; //PRODUCTION TODO do not republish
         Yii::app()->getClientScript()->registerCssFile($this->assetsUrl . 'woc.css', "screen, projection");
 	}
 

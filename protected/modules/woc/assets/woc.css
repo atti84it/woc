@@ -1,12 +1,27 @@
+.colored-visualizer {
+    height: 5px;
+    margin-bottom: 1px;
+}
+
 .light {
     opacity: 0.6;
 }
 
-.side-controls {
+.smiley-container {
+    margin-left: 15px;
+    margin-bottom: 8px;
+}
+
+.suggestion-left-container {
     display: inline;
     float: left;
-    margin-top: 10px;
     margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.suggestion-view {
+    margin: 42px;
+    margin-left: 0px;
 }
 
 .side-controls-overlay > img {
