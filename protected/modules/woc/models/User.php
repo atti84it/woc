@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'users':
  * @property string $id
  * @property string $email
+ * @property string $password
  * @property string $nickname
  * @property string $dateCreated
  * @property string $dateUpdated
@@ -14,6 +15,11 @@
  */
 class User extends CActiveRecord
 {
+    /**
+     * Stores unhashed password
+     */
+    public $cleanPassword;
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return User the static model class
@@ -43,7 +49,7 @@ class User extends CActiveRecord
 			array('karma', 'numerical', 'integerOnly'=>true),
 			array('email', 'length', 'max'=>25),
 			array('nickname', 'length', 'max'=>70),
-			array('dateUpdated, lastLogin', 'safe'),
+			array('dateUpdated, lastLogin, password', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, email, nickname, dateCreated, dateUpdated, lastLogin, karma', 'safe', 'on'=>'search'),
@@ -69,6 +75,7 @@ class User extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'email' => 'Email',
+            'password' => 'Password',
 			'nickname' => 'Nickname',
 			'dateCreated' => 'Registration Date',
 			'dateUpdated' => 'Updated Date',
@@ -113,9 +120,59 @@ class User extends CActiveRecord
         $user = new User;
         $user->email = $params['email'];
         $user->dateCreated = date('Y-m-d H:i:s'); //TODOdate
-        if ($user->save())
+        
+        $user->cleanPassword = $user->generatePassword();
+        $user->password = md5($user->cleanPassword);
+        $result = $user->save();
+        
+        $emailSuccess = $user->sendAuthenticationEmail();
+        
+        if ($result)
             return 'ok';
         else
             return 'dberror';
+    }
+    
+    /**
+     * Generates a 9 digit alphanumeric random password
+     */
+    public function generatePassword()
+    {
+        $pass = '';
+        $c = array('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','z');
+        $v = array('a','e','i','o','u');
+        
+        for ($i=1; $i<=3; $i++)
+        {
+            $pass .= array_rand($c);
+            $pass .= array_rand($v);
+        }
+        
+        for ($i=1; $i<=3; $i++)
+        {
+            $pass .= rand(0,9);
+        }
+        
+        return $pass;
+    }
+    
+    /**
+     * Sends an email to the user with authentication
+     * This will be improved in future releases to provide a more secure way (TODO)
+     */
+    public function sendAuthenticationEmail()
+    {
+        return $this->sendPasswordEmail();
+    }
+    
+    /**
+     * Sends an email to user with password in it
+     */
+    public function sendPasswordEmail()
+    {
+        $subject='Subscription to ' . Yii::app()->name; // or? CHtml::encode(Yii::app()->name)
+        $body='You can now login with the following credentials. User: ' . $this->email . ' Pass: ' . $this->cleanPassword . ' ';
+        $headers='From: noreply@woc.demo';
+		return mail($this->email,$subject,$body,$headers);
     }
 }

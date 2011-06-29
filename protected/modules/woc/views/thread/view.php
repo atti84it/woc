@@ -67,54 +67,60 @@ $this->menu=array(
 <script>
     $(function(){
 
-        $('.side-controls-overlay').hide();  // hide it initially div
+        $('.side-controls-overlay').hide();  // Hide overlay div initially
         
         $('div.side-controls > img').mouseenter(function(){
             $(this).addClass('light');
         }).mouseleave(function(){
             $(this).removeClass('light');
         }).click(function(){
+            /* Current structure is:
+             * side-controls-container
+             *   side-controls
+             *     img *3
+             *   side-controls-overlay
+             * So clickedContainer points to root div
+             */
             var clickedContainer = $(this).parent().parent();
             var suggestionId = $(this).attr('id').split('-')[1];
             var type = $(this).attr('id').split('-')[2];
             var timerVote = setTimeout(function(){timeout(clickedContainer)},10000);            
             
-            var height=$(clickedContainer).height(); // add? .children('.side-controls')
+            // The following lines replace arrow controls with waiting animated gif
+            var height=$(clickedContainer).height(); // optionally add .children('.side-controls')
             var width =$(clickedContainer).width();
             $(clickedContainer).children('.side-controls-overlay').height(height);
             $(clickedContainer).children('.side-controls-overlay').width(width);
             $(clickedContainer).children('.side-controls').hide();
             $(clickedContainer).children('.side-controls-overlay').show();
 
-            // $(this).parent().html('<img src="<?php echo $assetsUrl; ?>images/wait2.gif">');
             $.ajax({
                 url: '<?php echo $this->createUrl('/woc/suggestion/ajaxVote'); ?>',
                 data: {id: suggestionId, type: type},
+                dataType: 'json',
                 success: function (data) {
                     clearTimeout(timerVote);
                     restoreControls(clickedContainer);
                     if (data.code == 'ok')
                     {
-                        // clickedContainer.html(data.msg); // TODO do something better here
+                        var imgId = '#vote-' + suggestionId + '-' + type; 
+                        $(imgId).addClass('light');
+                        // TODO increment corresponding voted number +1
                     } else if (data.code == 'isguest') {
-                        //clickedContainer.html(''); //TODO Change this, must be overlay
                         $('#prompt-hotlog').fadeIn('fast');
                         $.ajax({
                             url: '<?php echo $this->createUrl('/woc/user/ajaxCaptchaPicture'); ?>',
+                            dataType: 'html',
                             success: function (data) {
                                 $('#hotlog-captcha').html(data);
-                            },
-                            dataType: 'html'
+                            }
                         });
-                        
                     } else {
-                        // clickedContainer.html(''); //TODO Change this, must be overlay
                         $('#message').html(data.msg);
-                        //$('#prompt-message').position({my:'left top', at:'left bottom', of:clickedContainer}); // Not working
+                        //$('#prompt-message').position({my:'left top', at:'left bottom', of:clickedContainer}); // TODO Not working
                         $('#prompt-message').fadeIn('fast');
                     }
-                },
-                dataType: 'json',
+                }                
             });
         });
         
@@ -123,7 +129,7 @@ $this->menu=array(
             var email = $('#hotlog-email').val();
             //TODO disable code, email and button
             //TODO show wait... + img
-            //TODO enable timeout
+            //TODO enable timeout and refactor name of previous timeout function
             $.ajax({
                 url: '<?php echo $this->createUrl('/woc/user/ajaxHotlog'); ?>',
                 data: {verificationCode: verificationCode, email: email},

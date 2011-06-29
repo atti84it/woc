@@ -1,20 +1,29 @@
 thread:
-  view: adjust position of prompts
-        don't eliminate arrow controls, just overlay with a div
-        Markdown of desc: http://www.yiiframework.com/doc/api/1.1/CMarkdown/
-          <?php $this->beginWidget('CMarkdown');?>
-          This is my markdown formatted content
-          <?php $this->endWidget();?>
-        Smileys (+)
-  proposed/discussions/debates - works in progress - finished/implemented
-  assignee(?)/responsible(?)/ team members + coordinator(?)
+    view: adjust position of prompts
+          Markdown of desc: http://www.yiiframework.com/doc/api/1.1/CMarkdown/
+              <?php $this->beginWidget('CMarkdown');?>
+              This is my markdown formatted content
+              <?php $this->endWidget();?>
+          Smileys (+)
+    proposed/discussions/debates - works in progress - finished/implemented
+    assignee(?)/responsible(?)/ team members + coordinator(?)
 
 suggestion:
-  relations
-  stat relations with votes_up/mid/down
+    relations
+    stat relations with votes_up/mid/down
 
 user:
-  confirmation email!! (++)
-  registration form (+)
-
-cron
+    registration form (+)
+    hotlog must count vote immediately without requiring login
+    
+presentation:
+    home-logged:
+        widget: popular thread + suggestion #1 | total votes, n suggestions, n votes in the last 12 hours
+    home-guest:
+        3 boxes: what, get started, ??
+            div-what: Woc is a collaborative platform for sharing ideas and taking decisions based on agreement
+            div-getstarted: popular 
+    
+cron:
+    confirmation email
+    check consistency between count votes and n_votes column
