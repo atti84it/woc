@@ -4,9 +4,9 @@ thread:
               <?php $this->beginWidget('CMarkdown');?>
               This is my markdown formatted content
               <?php $this->endWidget();?>
-          Smileys (+)
     proposed/discussions/debates - works in progress - finished/implemented
     assignee(?)/responsible(?)/ team members + coordinator(?)
+    improve visualization (e.g. bars inline)
 
 suggestion:
     relations
@@ -17,9 +17,9 @@ user:
     hotlog must count vote immediately without requiring login
     
 presentation:
-    home-logged:
+    home-logged: (+)
         widget: popular thread + suggestion #1 | total votes, n suggestions, n votes in the last 12 hours
-    home-guest:
+    home-guest: (+)
         3 boxes: what, get started, ??
             div-what: Woc is a collaborative platform for sharing ideas and taking decisions based on agreement
             div-getstarted: popular 

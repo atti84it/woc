@@ -20,8 +20,8 @@
 }
 
 .suggestion-view {
-    margin: 42px;
-    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 64px;
 }
 
 .side-controls-overlay > img {
