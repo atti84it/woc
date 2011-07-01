@@ -15,6 +15,7 @@ suggestion:
 user:
     registration form (+)
     hotlog must count vote immediately without requiring login
+    extend something from woc.models.user, to avoid $newPassword public property
     
 presentation:
     home-logged: (+)
@@ -22,8 +23,13 @@ presentation:
     home-guest: (+)
         3 boxes: what, get started, ??
             div-what: Woc is a collaborative platform for sharing ideas and taking decisions based on agreement
-            div-getstarted: popular 
+            div-getstarted: popular
+    htaccess, better url (+)        
+
+site:
+    how to save UTC time in dateCreated (+)
     
 cron:
     confirmation email
     check consistency between count votes and n_votes column
+

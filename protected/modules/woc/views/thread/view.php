@@ -140,7 +140,7 @@ $this->menu=array(
                         $('#hotlog-result').html('Succesful registration! You may now login using the password that has been sent to your email address');
                     } else if (data.code == 'wrongcode') {
                         $('#hotlog-result').html('Verification code is not correct');
-                    } else if (data.code == 'emailexisting') {
+                    } else if (data.code == 'emailexists') {
                         $('#hotlog-result').html('You are already a member. Have you forgot your password?');
                     } else if (data.code == 'dberror') {
                         $('#hotlog-result').html('Unknown database error :(');

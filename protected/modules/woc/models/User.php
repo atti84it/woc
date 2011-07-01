@@ -20,6 +20,11 @@ class User extends CActiveRecord
      */
     public $cleanPassword;
     
+    /**
+     * Contains salt to hash password
+     */
+    private $salt = 'salt';
+    
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return User the static model class
@@ -117,12 +122,16 @@ class User extends CActiveRecord
         if (! $ca->validate($params['verificationCode'], false) )
             return 'wrongcode';
             
+        $exists = User::model()->find('email = :email', array(':email'=>$params['email']));
+        if ($exists)
+            return 'emailexists';
+        
         $user = new User;
         $user->email = $params['email'];
         $user->dateCreated = date('Y-m-d H:i:s'); //TODOdate
         
         $user->cleanPassword = $user->generatePassword();
-        $user->password = md5($user->cleanPassword);
+        $user->password = $this->hashPassword($user->cleanPassword);
         $result = $user->save();
         
         $emailSuccess = $user->sendAuthenticationEmail();
@@ -154,6 +163,11 @@ class User extends CActiveRecord
         }
         
         return $pass;
+    }
+    
+    public function hashPassword($password)
+    {
+        return md5($password . $this->salt);
     }
     
     /**
