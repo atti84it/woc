@@ -7,15 +7,17 @@ thread:
     proposed/discussions/debates - works in progress - finished/implemented
     assignee(?)/responsible(?)/ team members + coordinator(?)
     improve visualization (e.g. bars inline)
+    deny update action (+)
 
 suggestion:
     relations
     stat relations with votes_up/mid/down
+    deny view+update actions (+)
 
 user:
-    registration form (+)
     hotlog must count vote immediately without requiring login
-    extend something from woc.models.user, to avoid $newPassword public property
+    user update generates exception
+    deny update other's profile (!)
     
 presentation:
     home-logged: (+)
