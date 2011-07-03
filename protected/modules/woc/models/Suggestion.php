@@ -133,7 +133,7 @@ class Suggestion extends CActiveRecord
         
         $var = 'votes_' . $type;
         
-        $opacity = $this->{$var} / $this->totVotes;
+        $opacity = ($this->totVotes != 0) ? $this->{$var} / $this->totVotes : 0.2;
         
         return array('type' => $type, 'opacity' => $opacity);
     }
@@ -187,5 +187,14 @@ class Suggestion extends CActiveRecord
             $this->errorMsg = 'Invalid option';
             return false;
         }
+    }
+    
+    public function votesPercent($type)
+    {
+        if ($this->totVotes == 0)
+            return 0;
+        $var = 'votes_' . $type;
+        return ($this->$var / $this->totVotes) * 100;
+        
     }
 }

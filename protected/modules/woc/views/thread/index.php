@@ -5,7 +5,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Create Thread', 'url'=>array('create')),
-	array('label'=>'Manage Thread', 'url'=>array('admin')),
 );
 ?>
 

@@ -69,7 +69,7 @@ class SuggestionController extends Controller
 		if(isset($_POST['Suggestion']))
 		{
 			$model->attributes=$_POST['Suggestion'];
-         
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -87,6 +87,9 @@ class SuggestionController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+
+        if ($model->userId != Yii::app()->user->id)
+            throw new CHttpException(403,Yii::t('yii','You are not authorized to perform this action.'));
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -122,7 +125,7 @@ class SuggestionController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
-    
+
     public function actionAjaxVote($id,$type)
     {
         if (Yii::app()->user->isGuest)
@@ -132,9 +135,9 @@ class SuggestionController extends Controller
             ));
             Yii::app()->end();
         }
-        
+
         if (Yii::app()->request->isAjaxRequest)
-        {     
+        {
             $model = $this->loadModel($id);
             $this->renderPartial('ajaxVote',array(
                 'model'=>$model,

@@ -9,9 +9,9 @@ $prevalentVote = $data->getPrevalentVote();
             <img src="<?php echo $assetsUrl; ?>images/smiley_<?php echo $prevalentVote['type']; ?>.png" style="opacity: <?php echo $prevalentVote['opacity']; ?>">
         </div>
         <div style="width: 70px" title="Up:<?php echo $data->votes_up ?> mid:<?php echo $data->votes_mid ?> down:<?php echo $data->votes_down ?>">
-            <div class="colored-visualizer" style="background: #027C00; width: <?php echo ($data->votes_up / $data->totVotes) * 100; ?>%"></div>
-            <div class="colored-visualizer" style="background: #FFCC2A; width: <?php echo ($data->votes_mid / $data->totVotes) * 100; ?>%"></div>
-            <div class="colored-visualizer" style="background: #C6000C; width: <?php echo ($data->votes_down / $data->totVotes) * 100; ?>%"></div>
+            <div class="colored-visualizer" style="background: #027C00; width: <?php echo $data->votesPercent('up') ?>%"></div>
+            <div class="colored-visualizer" style="background: #FFCC2A; width: <?php echo $data->votesPercent('mid') ?>%"></div>
+            <div class="colored-visualizer" style="background: #C6000C; width: <?php echo $data->votesPercent('down') ?>%"></div>
         </div>
         <div class="side-controls-container">
             <div class="side-controls">

@@ -54,7 +54,7 @@ class ThreadController extends Controller
         Yii::app()->getClientScript()->registerCoreScript('jquery.ui');
         $model = $this->loadModel($id);
         $suggestion=$this->newSuggestion($model);
-        
+
 		$this->render('view',array(
 			'model'=>$model,
             'suggestions'=>$model->suggestions,
@@ -95,6 +95,9 @@ class ThreadController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+
+        if ($model->userId != Yii::app()->user->id)
+            throw new CHttpException(403,Yii::t('yii','You are not authorized to perform this action.'));
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -173,13 +176,13 @@ class ThreadController extends Controller
     protected function newSuggestion($post)
     {
         $suggestion=new Suggestion;
-        
+
         if(isset($_POST['ajax']) && $_POST['ajax']==='suggestion-form')
         {
             echo CActiveForm::validate($suggestion);
             Yii::app()->end();
-        }        
-        
+        }
+
         if(isset($_POST['Suggestion']))
         {
             $suggestion->attributes=$_POST['Suggestion'];
@@ -189,9 +192,9 @@ class ThreadController extends Controller
                 $this->refresh();
             }
         }
-        return $suggestion;        
+        return $suggestion;
     }
-    
+
 	/**
 	 * Performs the AJAX validation.
 	 * @param CModel the model to be validated
