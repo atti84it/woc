@@ -1,0 +1,7 @@
+Alias /wocsite /home/attilio/Documenti/Development/wisdom-of-crowds
+<Directory /home/attilio/Documenti/Development/wisdom-of-crowds>
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride All
+	Order allow,deny
+	Allow from all
+</Directory>
