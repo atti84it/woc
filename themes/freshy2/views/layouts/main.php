@@ -49,7 +49,7 @@
                             'items'=>array(
                                     array('label'=>'Home', 'url'=>array('/site/index')),
                                     array('label'=>'Threads', 'url'=>$this->createUrl('/woc/thread')),
-                                    array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+                                    //array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
                                     array('label'=>'Contact', 'url'=>array('/site/contact')),
                                     array('label'=>'Register', 'url'=>array('/user/register'), 'visible'=>Yii::app()->user->isGuest),
                                     array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
@@ -66,9 +66,9 @@
     <div id="footer">
         <div class="container">
             <div id="footer_content">
-                <div style="font-size: 75%;font-style: italic;">Copyright &copy; <?php echo 'year'//Yii::app()->params['copyright_year']; ?> by <?php echo 'name'//Yii::app()->params['copyright_holder']; ?><br/>All Rights Reserved.<br/></div>
+                <!--<div style="font-size: 75%;font-style: italic;">Copyright &copy; 2011 by name<br/>All Rights Reserved.<br/></div>-->
                 <a href="http://www.yiiframework.com"><img title="Powered by Yii Framework" alt="Powered by Yii Framework" src="<?php echo Yii::app()->theme->baseUrl ?>/images/yii-powered.png"/></a><br/>
-                <a href="http://www.jide.fr"><img alt="design by jide" src="<?php echo Yii::app()->theme->baseUrl ?>/images/micro_jide.png"/></a>
+                <!--<a href="http://www.jide.fr"><img alt="design by jide" src="<?php echo Yii::app()->theme->baseUrl ?>/images/micro_jide.png"/></a>-->
             </div><!-- footer_content -->
         </div><!-- container -->
     </div><!-- footer -->

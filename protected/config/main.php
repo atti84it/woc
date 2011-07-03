@@ -41,16 +41,12 @@ return array(
             'allowAutoLogin'=>true,
         ),
         
-        // uncomment the following to enable URLs in path-format
-        
         'urlManager'=>array(
             'showScriptName'=>false,
             'urlFormat'=>'path',
             'rules'=>array(
                 '<module:\w+>/<controller:\w+>/<id:\d+>'=>'<module>/<controller>/view',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>'=>'<module>/<controller>/<action>',
-                
-                
                            
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -59,12 +55,6 @@ return array(
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             ),
         ),
-        
-        /*
-        'db'=>array(
-            'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-        ),*/
-        // uncomment the following to use a MySQL database
         
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=woc',

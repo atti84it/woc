@@ -131,7 +131,7 @@ class User extends CActiveRecord
         $user->dateCreated = gmdate('Y-m-d H:i:s');
         
         $user->cleanPassword = $user->generatePassword();
-        $user->password = $this->hashPassword($user->cleanPassword);
+        $user->password = $user->hashPassword($user->cleanPassword);
         $result = $user->save();
         
         $emailSuccess = $user->sendAuthenticationEmail();

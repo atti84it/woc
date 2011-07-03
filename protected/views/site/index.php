@@ -1,16 +1,21 @@
-<?php $this->pageTitle=Yii::app()->name; ?>
+<?php $this->pageTitle='WOC Project - Home'; ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
+<h1>Homepage</h1>
 
-<p>Congratulations! You have successfully created your Yii application.</p>
+<p>WOC is an Open Source collaborative platform for making decisions. 
+It's written in PHP on top of Yii framework. You can find more details in 
+<?php echo CHtml::link(
+                    'this page',
+                    array('/site/page', 'view'=>'details')
+            ) ?>
+.</p>
 
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <tt><?php echo __FILE__; ?></tt></li>
-	<li>Layout file: <tt><?php echo $this->getLayoutFile('main'); ?></tt></li>
-</ul>
+<p>This website is a meta-WOC: it's purpose is to improve the development of WOC tool through the same WOC.</p>
 
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<p><strong>Basic use:</strong> visit the 
+<?php echo CHtml::link(
+                    'Threads',
+                    array('woc/thread/index')
+            ) ?>
+ section and vote for the suggestions that you think are the best. 
+Wisdom of crowds will make the rest..</p>
