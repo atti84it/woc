@@ -71,7 +71,7 @@ class LoginForm extends CFormModel
 			Yii::app()->user->login($this->_identity,$duration);
             
             $user = User::model()->findByPk($this->_identity->id);
-            $user->lastLogin = date('Y-m-d H:i:s'); //TODOdate
+            $user->lastLogin = gmdate('Y-m-d H:i:s');
             $user->save();
             
 			return true;

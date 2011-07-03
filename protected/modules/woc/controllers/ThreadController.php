@@ -77,7 +77,7 @@ class ThreadController extends Controller
 		{
 			$model->attributes=$_POST['Thread'];
             $model->userId=Yii::app()->user->id;
-            $model->dateCreated = date('Y-m-d H:i:s'); //TODOdate
+            $model->dateCreated = gmdate('Y-m-d H:i:s');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

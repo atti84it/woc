@@ -168,7 +168,7 @@ class Suggestion extends CActiveRecord
                 $vote = new Vote;
                 $vote->suggestionId = $this->id;
                 $vote->userId = Yii::app()->user->id;
-                $vote->datetime = date('Y-m-d H:i:s'); //TODOdate
+                $vote->datetime = gmdate('Y-m-d H:i:s');
                 $vote->type = constant($const);
                 
                 $result = $vote->save();

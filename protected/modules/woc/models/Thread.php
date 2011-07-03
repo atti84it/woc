@@ -97,7 +97,7 @@ class Thread extends CActiveRecord
     {
         $suggestion->threadId=$this->id;
         $suggestion->userId=Yii::app()->user->id;
-        $suggestion->dateCreated = date('Y-m-d H:i:s'); //TODOdate           
+        $suggestion->dateCreated = gmdate('Y-m-d H:i:s');          
         return $suggestion->save();
     }   
 }

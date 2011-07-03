@@ -73,7 +73,7 @@ class UserController extends Controller
 		if(isset($_POST['SiteUser']))
 		{
 			$model->attributes=$_POST['SiteUser'];
-            $model->dateCreated = date('Y-m-d H:i:s'); //TODOdate
+            $model->dateCreated = gmdate('Y-m-d H:i:s');
 
             if($model->validate())
             {
@@ -114,7 +114,7 @@ class UserController extends Controller
                 if ($model->newPassword !== '')
                     $model->password = $model->hashPassword($model->newPassword);
 
-                $model->dateUpdated = date('Y-m-d H:i:s'); //TODOdate
+                $model->dateUpdated = gmdate('Y-m-d H:i:s');
                 
                 if($model->save(false))
                     $this->redirect(array('view','id'=>$model->id));
