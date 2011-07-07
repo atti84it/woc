@@ -104,6 +104,10 @@ class UserController extends Controller
 
 		if(isset($_POST['SiteUser']))
 		{
+            $user = User::model()->find('email = :email', array(':email'=>$_POST['SiteUser']['email']));
+            if($user)
+                throw new CHttpException(400,'You are already registered');
+            
 			$model->attributes=$_POST['SiteUser'];
             $model->dateCreated = gmdate('Y-m-d H:i:s');
 

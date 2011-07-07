@@ -13,7 +13,6 @@ suggestion:
     stat relations with votes_up/mid/down
 
 user:
-    on user/register check is email is already present (++)
     hotlog must count vote immediately without requiring login
     
 presentation:
@@ -29,4 +28,3 @@ site:
 cron:
     confirmation email
     check consistency between count votes and n_votes column
-
