@@ -13,8 +13,8 @@ suggestion:
     stat relations with votes_up/mid/down
 
 user:
+    on user/register check is email is already present (++)
     hotlog must count vote immediately without requiring login
-    user update generates exception
     
 presentation:
     home-logged: (+)
@@ -22,11 +22,9 @@ presentation:
     home-guest: (+)
         3 boxes: what, get started, ??
             div-what: Woc is a collaborative platform for sharing ideas and taking decisions based on agreement
-            div-getstarted: popular
-    htaccess, better url (+)        
+            div-getstarted: popular        
 
 site:
-    how to save UTC time in dateCreated (++)
     
 cron:
     confirmation email

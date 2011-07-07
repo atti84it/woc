@@ -34,7 +34,7 @@ class SiteUser extends User
             //User class stuff
 			array('email, dateCreated', 'required'),
 			array('karma', 'numerical', 'integerOnly'=>true),
-			array('email', 'length', 'max'=>25),
+			array('email', 'length', 'max'=>40),
 			array('nickname', 'length', 'max'=>70),
 			array('dateUpdated, lastLogin, password, newPassword, newPasswordConfirm', 'safe'),
 			// The following rule is used by search().

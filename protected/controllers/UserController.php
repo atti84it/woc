@@ -31,7 +31,7 @@ class UserController extends Controller
                 'users'=>array('@'),
             ),
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'register'),
+				'actions'=>array('index', 'register', 'recoverPassword'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -58,6 +58,38 @@ class UserController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+
+    /**
+     * Generates a new password and sends via email
+     */
+    public function actionRecoverPassword()
+    {
+        $displayForm = true;
+        
+        if(isset($_POST['email']))
+        {
+            $user = User::model()->find('email = :email', array(':email'=>$_POST['email']));
+            if ($user)
+            {
+                $user->cleanPassword = $user->generatePassword();
+                $user->password = $user->hashPassword($user->cleanPassword);
+                $result = $user->save();
+
+                $emailSuccess = $user->sendAuthenticationEmail();
+                
+                Yii::app()->user->setFlash('emailSent','A new password has been sent to your email address');
+                $displayForm = false;
+            }
+            else
+            {
+                Yii::app()->user->setFlash('emailNotFound','There\'s no user with that email');
+            }
+        }
+        
+        $this->render('recoverPassword', array(
+            'displayForm'=>$displayForm,
+        ));
+    } 
 
 	/**
 	 * Creates a new model.
@@ -125,26 +157,6 @@ class UserController extends Controller
 		$this->render('update',array(
 			'model'=>$model,
 		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
 	/**

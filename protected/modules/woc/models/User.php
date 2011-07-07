@@ -19,12 +19,12 @@ class User extends CActiveRecord
      * Stores unhashed password
      */
     public $cleanPassword;
-    
+
     /**
      * Contains salt to hash password
      */
     private $salt = 'salt';
-    
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return User the static model class
@@ -52,7 +52,7 @@ class User extends CActiveRecord
 		return array(
 			array('email, dateCreated', 'required'),
 			array('karma', 'numerical', 'integerOnly'=>true),
-			array('email', 'length', 'max'=>25),
+			array('email', 'length', 'max'=>40),
 			array('nickname', 'length', 'max'=>70),
 			array('dateUpdated, lastLogin, password', 'safe'),
 			// The following rule is used by search().
@@ -112,7 +112,7 @@ class User extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
-    
+
     /**
      * $params = array('verificationCode'=>$verificationCode, 'email'=>$email)
      */
@@ -121,27 +121,27 @@ class User extends CActiveRecord
         $ca = Yii::app()->getController()->createAction('captcha');
         if (! $ca->validate($params['verificationCode'], false) )
             return 'wrongcode';
-            
+
         $exists = User::model()->find('email = :email', array(':email'=>$params['email']));
         if ($exists)
             return 'emailexists';
-        
+
         $user = new User;
         $user->email = $params['email'];
         $user->dateCreated = gmdate('Y-m-d H:i:s');
-        
+
         $user->cleanPassword = $user->generatePassword();
         $user->password = $user->hashPassword($user->cleanPassword);
         $result = $user->save();
-        
+
         $emailSuccess = $user->sendAuthenticationEmail();
-        
+
         if ($result)
             return 'ok';
         else
             return 'dberror';
     }
-    
+
     /**
      * Generates a 9 digit alphanumeric random password
      */
@@ -150,26 +150,26 @@ class User extends CActiveRecord
         $pass = '';
         $c = array('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','z');
         $v = array('a','e','i','o','u');
-        
+
         for ($i=1; $i<=3; $i++)
         {
-            $pass .= array_rand($c);
-            $pass .= array_rand($v);
+            $pass .= $c[array_rand($c)];
+            $pass .= $v[array_rand($v)];
         }
-        
+
         for ($i=1; $i<=3; $i++)
         {
             $pass .= rand(0,9);
         }
-        
+
         return $pass;
     }
-    
+
     public function hashPassword($password)
     {
         return md5($password . $this->salt);
     }
-    
+
     /**
      * Sends an email to the user with authentication
      * This will be improved in future releases to provide a more secure way (TODO)
@@ -178,7 +178,7 @@ class User extends CActiveRecord
     {
         return $this->sendPasswordEmail();
     }
-    
+
     /**
      * Sends an email to user with password in it
      */
