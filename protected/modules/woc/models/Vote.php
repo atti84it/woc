@@ -26,7 +26,7 @@ class Vote extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'votes';
+		return Yii::app()->getModule('woc')->dbTablePrefix . 'votes';
 	}
 
 	/**

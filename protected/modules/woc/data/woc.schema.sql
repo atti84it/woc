@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: 03 lug, 2011 at 02:26 AM
+-- Generato il: 06 lug, 2011 at 07:50 PM
 -- Versione MySQL: 5.1.54
 -- Versione PHP: 5.3.5-1ubuntu7.2
 
@@ -25,7 +25,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Struttura della tabella `suggestions`
 --
 
-DROP TABLE IF EXISTS `suggestions`;
 CREATE TABLE IF NOT EXISTS `suggestions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `threadId` int(10) unsigned NOT NULL,
@@ -37,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `suggestions` (
   `votes_mid` smallint(6) DEFAULT '0',
   `votes_down` smallint(6) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
@@ -45,7 +44,6 @@ CREATE TABLE IF NOT EXISTS `suggestions` (
 -- Struttura della tabella `threads`
 --
 
-DROP TABLE IF EXISTS `threads`;
 CREATE TABLE IF NOT EXISTS `threads` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `userId` int(10) unsigned NOT NULL,
@@ -54,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `threads` (
   `desc` text NOT NULL,
   `dateCreated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -62,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `threads` (
 -- Struttura della tabella `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(40) NOT NULL,
@@ -73,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastLogin` datetime DEFAULT NULL,
   `karma` smallint(6) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -81,7 +78,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Struttura della tabella `votes`
 --
 
-DROP TABLE IF EXISTS `votes`;
 CREATE TABLE IF NOT EXISTS `votes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `suggestionId` int(10) unsigned NOT NULL,
@@ -89,4 +85,4 @@ CREATE TABLE IF NOT EXISTS `votes` (
   `datetime` datetime NOT NULL,
   `type` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;

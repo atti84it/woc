@@ -39,7 +39,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'users';
+		return Yii::app()->getModule('woc')->dbTablePrefix . 'users';
 	}
 
 	/**

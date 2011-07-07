@@ -27,7 +27,7 @@ class Thread extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'threads';
+		return Yii::app()->getModule('woc')->dbTablePrefix . 'threads';
 	}
 
 	/**

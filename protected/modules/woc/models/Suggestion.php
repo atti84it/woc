@@ -39,7 +39,7 @@ class Suggestion extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'suggestions';
+		return Yii::app()->getModule('woc')->dbTablePrefix . 'suggestions';
 	}
 
 	/**
